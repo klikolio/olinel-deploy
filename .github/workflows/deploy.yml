@@ -6,7 +6,6 @@ on:
 
 env:
   NODE_VERSION: 18.x
-  NODE_ENV: "production"
   OUTPUT_DIR: dist
   ARTIFACT_NAME: compiled_assets
 
