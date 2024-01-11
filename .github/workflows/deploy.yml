@@ -8,6 +8,8 @@ env:
   PRODUCTION: true
   NODE_VERSION: 18.x
   OUTPUT_DIR: dist
+  INSTALL_COMMAND: npm install
+  BUILD_COMMAND: npm run build
   ARTIFACT_NAME: compiled_assets
 
 jobs: 
@@ -21,11 +23,11 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install Dependencies
-        run: npm install
+        run: ${{ env.INSTALL_COMMAND }}
       - name: Run Build Task
-        run: npm run build
+        run: ${{ env.BUILD_COMMAND }}
       - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ env.OUTPUT_DIR }}
@@ -39,6 +41,6 @@ jobs:
       id-token: write
     steps:
       - name: Deploy to Github Pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v3
         with:
           artifact_name: ${{ env.ARTIFACT_NAME }}
