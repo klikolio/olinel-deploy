@@ -1,0 +1,122 @@
+name: Build & Package Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        type: string
+        description: 'Release version (v*.*.*)'
+        required: true
+      node_version:
+        type: choice
+        description: 'NodeJS version'
+        required: true
+        default: 20.x
+        options:
+          - 20.x
+          - 18.x
+          - 16.x
+          - 14.x
+      docs_html_file_name: 
+        type: string
+        description: 'Included HTML docs name'
+        required: true
+        default: template-html_v1.html
+      docs_pdf_file_name: 
+        type: string
+        description: 'Included HTML pdf name'
+        required: true
+        default: Klikolio Docs (HTML Template) v1.pdf
+
+env:
+  NODE_ENV: ${{ github.event.inputs.node_version }}
+  ARTIFACT_TEMPLATE_NAME: ${{ vars.ARTIFACT_TEMPLATE_NAME }}_${{ github.event.inputs.release_version }}
+  ARTIFACT_DOCS_NAME: ${{ vars.ARTIFACT_DOCS_NAME }}_${{ github.event.inputs.release_version }}
+  ARTIFACT_PACKAGE_NAME: ${{ vars.ARTIFACT_PACKAGE_NAME }}_${{ github.event.inputs.release_version }}
+  TEMPLATE_BUILD_COMMAND: |
+    npm install
+    gulp build
+  TEMPLATE_ASSETS_INCLUDES: |
+    dist
+    src
+    tool
+    config.json
+    gulpfile.js
+    package.json
+    package-lock.json
+  DOCS_BUILD_COMMAND: |
+    npm install
+    gulp build
+  DOCS_HTML_MAIN_FILE_NAME: ${{ github.event.inputs.docs_html_file_name }}
+  DOCS_PDF_MAIN_FILE_NAME: ${{ github.event.inputs.docs_pdf_file_name }}
+
+jobs:
+
+  build-template:
+    name: Build Template
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup NodeJS ${{ env.NODE_ENV }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_ENV }}
+      - name: Gulp Build
+        run: ${{ env.TEMPLATE_BUILD_COMMAND }}
+      - name: Upload Assets
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.ARTIFACT_TEMPLATE_NAME }}
+          path: ${{ env.TEMPLATE_ASSETS_INCLUDES }}
+    
+  build-docs:
+    name: Build Docs
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with: 
+        repository: ${{ vars.REPO_DOCS_NAME }}
+        token: ${{ secrets.PAT_TOKEN }}
+    - name: Setup NodeJS ${{ env.NODE_ENV }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_ENV }}
+    - name: Gulp Build
+      run: ${{ env.DOCS_BUILD_COMMAND }}
+    - name: Restructure Directory
+      run: |
+        mkdir -p package/html
+        mkdir -p package/pdf
+        mv dist/assets package/html/assets
+        mv dist/${{ env.DOCS_HTML_MAIN_FILE_NAME }} package/html/index.html
+        mv 'pdf/${{ env.DOCS_PDF_MAIN_FILE_NAME }}' 'package/pdf/${{ env.DOCS_PDF_MAIN_FILE_NAME }}'
+    - name: Upload Assets
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.ARTIFACT_DOCS_NAME }}
+        path: package
+        
+  package:
+    name: Package
+    needs: [build-template, build-docs]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download Template
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ env.ARTIFACT_TEMPLATE_NAME }}
+        path: ${{ vars.DIR_TEMPLATE_NAME }}
+    - name: Download Docs
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ env.ARTIFACT_DOCS_NAME }}
+        path: ${{ vars.DIR_DOCS_NAME }}
+    - name: Upload package assets
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.ARTIFACT_PACKAGE_NAME }}
+        path: |
+          ${{ vars.DIR_TEMPLATE_NAME }}
+          ${{ vars.DIR_DOCS_NAME }}
