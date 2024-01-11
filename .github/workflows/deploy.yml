@@ -44,6 +44,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to Github Pages
+        id: deployment
         uses: actions/deploy-pages@v2
         with:
           artifact_name: ${{ env.ARTIFACT_NAME }}
