@@ -25,7 +25,7 @@ jobs:
       - name: Run Build Task
         run: npm run build
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-pages-artifact@v2
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ env.OUTPUT_DIR }}
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pages: write
-      id-token: write 
+      id-token: write
     steps:
       - name: Deploy to Github Pages
         uses: actions/deploy-pages@v4
