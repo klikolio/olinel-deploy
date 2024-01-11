@@ -5,6 +5,7 @@ on:
     branches: [ "master", "main" ]
 
 env:
+  PRODUCTION: true
   NODE_VERSION: 18.x
   OUTPUT_DIR: dist
   ARTIFACT_NAME: compiled_assets
@@ -20,7 +21,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install Dependencies
-        run: npm clean install
+        run: npm install
       - name: Run Build Task
         run: npm run build
       - name: Upload Artifact

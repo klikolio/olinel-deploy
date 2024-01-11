@@ -150,7 +150,7 @@ const getAssets = allow => {
 const getConfig = () => {
   const config = parseConfig('config.json').config
   
-  config.production = process.env.NODE_ENV === "production" ? true : config.production
+  config.production = process.env.PRODUCTION === "true" ? true : config.production
   config.direction = process.env.DIRECTION ? process.env.DIRECTION : config.direction
   config.sourcemaps = config.production ? false : config.sourcemaps
   config.html_beautify = config.production ? false : config.html_beautify
