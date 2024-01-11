@@ -10,7 +10,7 @@ env:
   ARTIFACT_NAME: compiled_assets
   BUILD_COMMAND: |
     npm install
-    gulp build
+    npm run build
 
 jobs: 
   build: 
@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Gulp Build
+      - name: Build Assets
         run: ${{ env.BUILD_COMMAND }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v3

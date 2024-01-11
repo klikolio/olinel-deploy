@@ -35,7 +35,7 @@ env:
   ARTIFACT_PACKAGE_NAME: ${{ vars.ARTIFACT_PACKAGE_NAME }}_${{ github.event.inputs.release_version }}
   TEMPLATE_BUILD_COMMAND: |
     npm install
-    gulp build
+    npm run
   TEMPLATE_ASSETS_INCLUDES: |
     dist
     src
