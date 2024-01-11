@@ -14,7 +14,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Setup NodeJS ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
