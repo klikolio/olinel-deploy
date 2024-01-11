@@ -10,6 +10,7 @@ env:
   ARTIFACT_NAME: compiled_assets
   BUILD_COMMAND: |
     npm install
+    npm install -g gulp
     npm run build
 
 jobs: 
