@@ -1,10 +1,11 @@
 Setup Git & Github
 1. Install Git from https://git-scm.com on your computer
 2. Install Github CLI from https://cli.github.com on your computer
-3. Authenticate your Github CLI with your Github account using "gh auth login"
+3. Set Git infomration "git config --global user.name "Your name"" and "git config --global user.email "MY_NAME@example.com"" Fill with your data
 4. Open terminal on the template directory and initilize repository with "git init"
 5. Add and commit all files initially with "git add ." and "git commit -m 'Initial commit'"
-6. Create online Github repository "gh repo create" and choose "Push an existing local repository to GitHub"
+6. Authenticate your Github CLI with your Github account using "gh auth login"
+7. Create online Github repository "gh repo create" and choose "Push an existing local repository to GitHub"
 
 Vercel
 1. Install vercel CLI with "npm install -g vercel"
