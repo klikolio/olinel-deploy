@@ -23,7 +23,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Install Gulp CLI
-        run: npm install --global gulp-cli
+        run: npm install gulp
       - name: Run Build Task
         run: gulp build
       - name: Upload Artifact
