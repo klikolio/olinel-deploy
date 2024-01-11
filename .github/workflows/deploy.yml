@@ -15,18 +15,15 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - name: Setup NodeJS ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install Dependencies
-        run: npm install
-      - name: Install Gulp CLI
-        run: npm install gulp
+        run: npm clean install
       - name: Run Build Task
-        run: gulp build
+        run: npm run build
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
