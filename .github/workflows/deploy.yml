@@ -25,9 +25,7 @@ jobs:
       - name: Install Gulp CLI
         run: npm install --global gulp-cli
       - name: Run Build Task
-        run: |
-          dir
-          npx gulp build
+        run: gulp build
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
