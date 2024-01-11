@@ -8,9 +8,6 @@ env:
   NODE_ENV: "production"
   OUTPUT_DIR: dist
   ARTIFACT_NAME: compiled_assets
-  BUILD_COMMAND: |
-    npm install
-    npm install -g gulp-cli
 
 jobs: 
   build: 
@@ -23,8 +20,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Build Assets
-        run: ${{ env.BUILD_COMMAND }}
+      - name: Install Dependencies
+        run: npm install
+      - name: Run Build Task
+        run: npm run build
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
