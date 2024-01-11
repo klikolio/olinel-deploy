@@ -15,6 +15,8 @@ Vercel
 5. After deployment completed you can see the URL and you can check your project on Vercel dashboard
 
 Github Pages
+1. Repo must be public
+2. Go to repo pages, settings -> pages and on Build and deployment menu set Source to Github Actions
 
 Heroku
 1. npm install -g heroku
