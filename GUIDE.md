@@ -16,8 +16,8 @@ Vercel
 
 Github Pages
 1. Repo must be public
-2. Go to repo pages, settings -> pages and on Build and deployment menu set Source to Github Actions
-
+2. Enable Github Page Go to repo pages, settings -> pages and on Build and deployment menu set Source to Github Actions
+3. Go to repo pages, actions to check deployment status. If the deployment success you can check on
 Heroku
 1. npm install -g heroku
 2. heroku login

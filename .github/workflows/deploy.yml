@@ -27,7 +27,7 @@ jobs:
       - name: Run Build Task
         run: ${{ env.BUILD_COMMAND }}
       - name: Upload Artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v2
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ env.OUTPUT_DIR }}
@@ -39,8 +39,11 @@ jobs:
     permissions:
       pages: write
       id-token: write
+    environment: 
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to Github Pages
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v2
         with:
           artifact_name: ${{ env.ARTIFACT_NAME }}
