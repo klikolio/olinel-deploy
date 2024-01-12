@@ -5,15 +5,21 @@ const glob = require('glob')
 const log = require('fancy-log')
 const fs = require('fs')
 
-const envTypes = ['GITHUB_ACTIONS']
+const envTypes = [
+  { key: 'GITHUB_ACTIONS', value: 'true' },
+  { key: 'VERCEL_ENV', value: 'production' },
+  { key: 'NODE_ENV', value: 'production' }
+]
 
 require('dotenv').config({
   path: (() => {
-    const envType = envTypes.find((envType) => process.env[envType] === 'true')
+    const envType = envTypes.find((envType) => process.env[envType.key] === envType.value)
 
     return path.resolve(process.cwd(), envType ? '.env.production' : '.env')
   })()
 })
+
+console.log(process.env);
 
 // Function to parse config file
 const parseConfig = path => {
@@ -48,7 +54,6 @@ const getBuild = (part, allow) => {
     if (allow.includes(this.key)) {
 
       let name = this.parent.key
-      let path = this.path
       let type = this.key
 
       if (part === 'optional' && skip.includes(name)) {
@@ -160,7 +165,6 @@ const getAssets = allow => {
 // Function to get configuration data
 const getConfig = () => {
   const config = parseConfig('config.json').config
-  console.log(process.env);
 
   config.production = process.env.PRODUCTION === "true" ? true : config.production
   config.direction = process.env.DIRECTION ? process.env.DIRECTION : config.direction
