@@ -1,5 +1,5 @@
-name: Github Pages Deployment
-run-name: github-pages
+name: github-pages
+run-name: Github Pages Deployment
 on:
   workflow_dispatch
 env:
