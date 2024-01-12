@@ -1,15 +1,13 @@
 name: Github Pages Deployment
-
+run-name: github-pages
 on:
   workflow_dispatch
-
 env:
   NODE_VERSION: 18.x
   OUTPUT_DIR: dist
   INSTALL_COMMAND: npm install
   BUILD_COMMAND: npm run build
   ARTIFACT_NAME: compiled_assets
-
 jobs: 
   build: 
     name: Build
