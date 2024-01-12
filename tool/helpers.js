@@ -5,8 +5,14 @@ const glob = require('glob')
 const log = require('fancy-log')
 const fs = require('fs')
 
+const envTypes = ['GITHUB_ACTIONS']
+
 require('dotenv').config({
-  path: path.resolve(process.cwd(), process.env.NODE_ENV === 'production' ? '.env.production' : '.env')
+  path: (() => {
+    const isProduction = envTypes.find((envType) => process.env[envType] === 'true')
+
+    return path.resolve(process.cwd(), isProduction ? '.env.production' : '.env')
+  })()
 })
 
 // Function to parse config file
