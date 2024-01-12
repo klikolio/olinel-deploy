@@ -3,7 +3,7 @@ run-name: Github Pages Deployment
 on:
   workflow_dispatch
 env:
-  NODE_VERSION: 18.x
+  NODE_VERSION: 20.x
   OUTPUT_DIR: dist
   INSTALL_COMMAND: npm install
   BUILD_COMMAND: npm run build
