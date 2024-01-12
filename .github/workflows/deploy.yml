@@ -4,7 +4,6 @@ on:
   workflow_dispatch
 
 env:
-  PRODUCTION: true
   NODE_VERSION: 18.x
   OUTPUT_DIR: dist
   INSTALL_COMMAND: npm install
