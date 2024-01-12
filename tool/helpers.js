@@ -9,9 +9,9 @@ const envTypes = ['GITHUB_ACTIONS']
 
 require('dotenv').config({
   path: (() => {
-    const isProduction = envTypes.find((envType) => process.env[envType] === 'true')
+    const envType = envTypes.find((envType) => process.env[envType] === 'true')
 
-    return path.resolve(process.cwd(), isProduction ? '.env.production' : '.env')
+    return path.resolve(process.cwd(), envType ? '.env.production' : '.env')
   })()
 })
 
