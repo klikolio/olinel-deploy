@@ -1,8 +1,13 @@
 const traverse = require('traverse')
 const colors = require('colors')
+const path = require('path')
 const glob = require('glob')
 const log = require('fancy-log')
 const fs = require('fs')
+
+require('dotenv').config({
+  path: path.resolve(process.cwd(), process.env.NODE_ENV === 'production' ? '.env.production' : '.env')
+})
 
 // Function to parse config file
 const parseConfig = path => {
@@ -33,7 +38,7 @@ const getBuild = (part, allow) => {
     return allowed.includes(type)
   })
 
-  return traverse(libs[part]).reduce(function(result, package) {
+  return traverse(libs[part]).reduce(function (result, package) {
     if (allow.includes(this.key)) {
 
       let name = this.parent.key
@@ -106,7 +111,7 @@ const getAssets = allow => {
     return allowed.includes(type)
   })
 
-  return traverse(libs).reduce(function(result, package) {
+  return traverse(libs).reduce(function (result, package) {
     if (allow.includes(this.key)) {
 
       let name = this.parent.key
@@ -149,12 +154,13 @@ const getAssets = allow => {
 // Function to get configuration data
 const getConfig = () => {
   const config = parseConfig('config.json').config
-  
+  console.log(process.env);
+
   config.production = process.env.PRODUCTION === "true" ? true : config.production
   config.direction = process.env.DIRECTION ? process.env.DIRECTION : config.direction
   config.sourcemaps = config.production ? false : config.sourcemaps
   config.html_beautify = config.production ? false : config.html_beautify
-  
+
   return config
 }
 
