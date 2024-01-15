@@ -19,6 +19,8 @@ require('dotenv').config({
   })()
 })
 
+console.log(process.env);
+
 // Function to parse config file
 const parseConfig = path => {
   // Get config file by path parameter
